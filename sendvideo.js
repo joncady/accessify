@@ -56,5 +56,11 @@ app.get("/timestamps", (req, res) => {
 
 });
 
+app.get("/getallvideos", (req, res) => {
+	const path = "ex";
+	let files = fs.readdirSync(path);
+	res.send(JSON.stringify(files));
+});
+
 app.listen(3000, () => console.log("Listening on "));
 
