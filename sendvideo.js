@@ -4,12 +4,30 @@ const fs = require('fs');
 
 
 let timestamps = {
-	[0.5]: "It works",
-	[1.0]: "This is people walking",
-	[1.5]: "Ok cool",
-	[2.0]: "2 seconds",
-	[2.5]: "2.5",
-	[3.0]: "hello"
+	["walking.mp4"]: {
+		[0.5]: "It works",
+		[1.0]: "This is people walking",
+		[1.5]: "Ok cool",
+		[2.0]: "2 seconds",
+		[2.5]: "2.5",
+		[3.0]: "hello"
+	},
+	["flower.mp4"]: {
+		[0.5]: "It works",
+		[1.0]: "This is people walking",
+		[1.5]: "Ok cool",
+		[2.0]: "2 seconds",
+		[2.5]: "2.5",
+		[3.0]: "hello"
+	},
+	["red.mp4"]: {
+		[0.5]: "It works",
+		[1.0]: "This is people walking",
+		[1.5]: "Ok cool",
+		[2.0]: "2 seconds",
+		[2.5]: "2.5",
+		[3.0]: "hello"
+	}
 }
 
 app.get('/video', function (req, res) {
@@ -45,15 +63,9 @@ app.get('/video', function (req, res) {
 });
 
 app.get("/timestamps", (req, res) => {
-	let time = req.query.time;
-	let message = timestamps[time];
+	let name = req.query.name;
 	res.header("Access-Control-Allow-Origin", "*");
-	if (message) {
-		res.send(JSON.stringify({ message: message }));
-	} else {
-		res.send(JSON.stringify({ message: "no transcription" }));
-	}
-
+	res.send(timestamps[name]);
 });
 
 app.listen(3000, () => console.log("Listening on "));
