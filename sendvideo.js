@@ -1,32 +1,40 @@
 const express = require('express');
 const app = express();
 const fs = require('fs');
-
+app.use(express.static('public'))
 
 let timestamps = {
 	["walking.mp4"]: {
-		[0.5]: "It works",
-		[1.0]: "This is people walking",
-		[1.5]: "Ok cool",
-		[2.0]: "2 seconds",
-		[2.5]: "2.5",
-		[3.0]: "hello"
+		[0]: "It works",
+		[1]: "This is people walking",
+		[2]: "Ok cool",
+		[3]: "2 seconds",
+		[4]: "2.5",
+		[5]: "hello"
 	},
 	["flower.mp4"]: {
-		[0.5]: "It works",
-		[1.0]: "This is people walking",
-		[1.5]: "Ok cool",
-		[2.0]: "2 seconds",
-		[2.5]: "2.5",
-		[3.0]: "hello"
+		[0]: "It works",
+		[1]: "This is people walking",
+		[2]: "Ok cool",
+		[3]: "2 seconds",
+		[4]: "2.5",
+		[5]: "hello"
 	},
 	["red.mp4"]: {
-		[0.5]: "It works",
-		[1.0]: "This is people walking",
-		[1.5]: "Ok cool",
-		[2.0]: "2 seconds",
-		[2.5]: "2.5",
-		[3.0]: "hello"
+		[0]: "It works",
+		[1]: "This is people walking",
+		[2]: "Ok cool",
+		[3]: "2 seconds",
+		[4]: "2.5",
+		[5]: "hello"
+	},
+	["stuartreges.mp4"]: {
+		[0]: "let's go ahead and get started",
+		[1]: "let's go ahead and get started",
+		[2]: "let's go ahead and get started",
+		[3]: "let's go ahead and get started",
+		[4]: "let's go ahead and get started",
+		[5]: "let's go ahead and get started"
 	}
 }
 
@@ -62,7 +70,7 @@ app.get('/video', function (req, res) {
 	}
 });
 
-app.get("/timestamps", (req, res) => {
+app.get("/transcript", (req, res) => {
 	let name = req.query.name;
 	res.header("Access-Control-Allow-Origin", "*");
 	res.send(timestamps[name]);
@@ -71,8 +79,19 @@ app.get("/timestamps", (req, res) => {
 app.get("/getallvideos", (req, res) => {
 	const path = "ex";
 	let files = fs.readdirSync(path);
+	res.header("Access-Control-Allow-Origin", "*");
 	res.send(JSON.stringify(files));
 });
 
-app.listen(3000, () => console.log("Listening on "));
+app.get("/image", (req, res) => {
+	let image = req.query.name;
+	let path = `public/${image}`;
+	let file = fs.readFile(path, (err, file) => {
+		res.header("content-type", "image/png");
+		res.header("Access-Control-Allow-Origin", "*");
+		res.end(file, "binary");
+	});
+})
+
+app.listen(3000, () => console.log("Listening on 3000"));
 
